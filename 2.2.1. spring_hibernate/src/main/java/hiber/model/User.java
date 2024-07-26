@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Car car;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +19,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    public User() {}
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Car car;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -36,6 +37,17 @@ public class User {
         this.email = email;
         this.car = car;
         this.car.setUser(this);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", car=" + car +
+                '}';
     }
 
     public Car getCar() {

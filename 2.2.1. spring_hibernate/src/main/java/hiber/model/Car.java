@@ -6,10 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "cars")
 public class Car {
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +16,21 @@ public class Car {
     @Column(name = "model")
     private String model;
 
-    public Car() {}
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Car() {
+    }
 
     public Car(String model, int series) {
         this.model = model;
         this.series = series;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" + "id=" + id + ", model='" + model + '\'' + ", series=" + series + '}';
     }
 
     public User getUser() {
